@@ -3,11 +3,12 @@ import axios from 'axios';
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {  SubmitHandler, useForm,  } from "react-hook-form"
-import Box from "@mui/material/Box"
 import  CircularProgress from "@mui/material/CircularProgress";
 import  Button  from "@mui/material/Button";
 
 import FormField from "../../components/formField/FormField";
+import { StyledMUIBox, StyledMUIWrapText } from "../../styles/BaseComponent";
+
 
 interface iFormValues {
     fromCurrency: string,
@@ -91,6 +92,7 @@ const CurrencySwap: React.FC = () => {
 
   const onSubmit: SubmitHandler<iFormValues> = (data) => {
     const { fromCurrency, toCurrency, amount } = data;
+    
     if (fromCurrency !== toCurrency) {
       const fromPrice = prices.find(p => p.currency === fromCurrency)?.price || 0;
       const toPrice = prices.find(p => p.currency === toCurrency)?.price || 0;
@@ -103,7 +105,7 @@ const CurrencySwap: React.FC = () => {
 
   if (loading) return <CircularProgress size={50} />;
   return (
-       <Box component="form" onSubmit={handleSubmit(onSubmit)}sx={{ width: '30%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+       <StyledMUIBox component="form" onSubmit={handleSubmit(onSubmit)}>
             <FormField 
                 name="fromCurrency"
                 control={control}
@@ -130,10 +132,10 @@ const CurrencySwap: React.FC = () => {
             <Button type="submit" variant="contained" color="primary" >
               Swap
             </Button>
-            {swapResult && <Box mt={2} p={2} border={1} borderColor="grey.300" borderRadius={2} bgcolor="grey.100">
+            {swapResult && <StyledMUIWrapText>
               {swapResult}
-            </Box>}
-       </Box>
+            </StyledMUIWrapText>}
+       </StyledMUIBox>
     )
 }
 
